@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Search Confessions — Undelivered</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(to bottom, #fdf6f8, #ffeef2), url('https://i.imgur.com/Up9L5sx.png');
+      background-size: cover;
+      font-family: 'Kalam', cursive;
+      color: #4b2e2e;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    .search-box {
+      max-width: 500px;
+      margin: auto;
+      display: flex;
+      gap: 0.5rem;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 0.7rem;
+      border: 1px solid #e3b4c1;
+      border-radius: 8px;
+      font-family: 'Kalam', cursive;
+      font-size: 1rem;
+      background: #fffdfd;
+    }
+    button {
+      background-color: #e3b4c1;
+      color: white;
+      border: none;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 1.1rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <h1>Search for Your Name</h1>
+  <div class="search-box">
+    <input type="text" placeholder="Try searching 'M.', 'Nicole', 'Nov'..." />
+    <button>Search</button>
+  </div>
+  <div class="result">No results yet. Try searching a name someone might use for you!</div>
+</body>
+</html>
