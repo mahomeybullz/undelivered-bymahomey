@@ -2,102 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Undelivered — by MAHOMEY BULWAYAN LD</title>
-  <link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet" />
+  <title>Confession Wall</title>
+  <script type="module">
+    import { db } from "./firebase.js";
+    import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const wall = document.getElementById("wall");
+
+    async function loadConfessions() {
+      const q = query(collection(db, "confessions"), where("approved", "==", true));
+      const snapshot = await getDocs(q);
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const div = document.createElement("div");
+        div.className = "confession";
+        div.innerHTML = `<strong>${data.to || "Anonymous"}</strong><p>${data.message}</p>`;
+        wall.appendChild(div);
+      });
+    }
+
+    loadConfessions();
+  </script>
   <style>
-    body {
-      background: linear-gradient(to bottom, #fdf6f8, #ffeef2), url('https://i.imgur.com/Up9L5sx.png');
-      background-size: cover;
-      font-family: 'Kalam', cursive;
-      color: #4b2e2e;
-      padding: 2rem;
-    }
-    .container {
-      max-width: 600px;
-      margin: auto;
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-    h1 {
-      font-size: 2.2rem;
-      margin: 0;
-    }
-    .subtitle {
-      font-size: 1.1rem;
-      color: #b78695;
-    }
-    .tagline {
-      font-size: 0.95rem;
-      color: #a88191;
-      margin-top: 0.3rem;
-    }
-    .confession-wall {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-    .confession {
-      background: rgba(255, 255, 255, 0.5);
-      border: 1px solid #e7bccd;
-      border-radius: 10px;
-      padding: 1rem;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-    .nav-buttons {
-      text-align: center;
-      margin-top: 2.5rem;
-    }
-    .nav-buttons a {
-      display: inline-block;
-      margin: 0.5rem 1rem;
-      padding: 0.7rem 1.2rem;
-      background-color: #e3b4c1;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: background 0.2s ease;
-    }
-    .nav-buttons a:hover {
-      background-color: #d29aad;
-    }
-    .footer {
-      text-align: center;
-      margin-top: 3rem;
-      font-size: 0.9rem;
-      color: #8e6e7c;
-    }
+    body { font-family: cursive; background: #fff0f4; padding: 20px; }
+    .confession { background: white; border: 1px solid pink; padding: 1rem; margin: 1rem 0; border-radius: 10px; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>Undelivered</h1>
-      <p class="subtitle">by MAHOMEY BULWAYAN LD</p>
-      <p class="tagline">where the unsent things go</p>
-    </div>
-
-    <div class="nav-buttons">
-      <a href="submit.html">➕ Submit</a>
-      <a href="search.html">🔍 Search</a>
-    </div>
-
-    <main class="confession-wall">
-      <div class="confession">TO M. — “ikaw na bahala if magpapaalam ka pa or hindi na...”</div>
-      <div class="confession">dear, N — “you were my comfort person, but now I feel like a stranger to you.”</div>
-      <div class="confession">hey, nov — “namimiss na kita kahit hindi mo ramdam. pero okay lang, sanay na.”</div>
-      <div class="confession">TO ATE J — “akala ko safe ako sayo, bakit mo ko iniwan nung kailangang-kailangan kita?”</div>
-      <div class="confession">TO T. — “hindi ako galit, pero hindi rin ako buo.”</div>
-    </main>
-
-    <div class="footer">
-      🌧 Glitchy Rain Vibes Activated — <br> Undelivered — by MAHOMEY BULWAYAN LD
-    </div>
-  </div>
+  <h1>🩷 Undelivered Wall</h1>
+  <div id="wall"></div>
 </body>
 </html>
