@@ -4,36 +4,6 @@
   <meta charset="UTF-8" />
   <title>Undelivered — by MAHOMEY BULWAYAN LD</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script type="module">
-    import { db } from "./firebase.js";
-    import {
-      collection,
-      getDocs,
-      query,
-      where
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const wall = document.getElementById("wall");
-
-    async function loadConfessions() {
-      const q = query(collection(db, "confessions"), where("approved", "==", true));
-      const snapshot = await getDocs(q);
-
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const div = document.createElement("div");
-        div.className = "confession";
-        div.innerHTML = `
-          <p class="to-label">To: ${data.to || "someone"}</p>
-          <p class="message">“${data.message}”</p>
-        `;
-        wall.appendChild(div);
-      });
-    }
-
-    loadConfessions();
-  </script>
-
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Schoolbell&display=swap');
 
@@ -42,24 +12,23 @@
       background-color: #fdf3f7;
       background-image: url('https://mahomey-files.netlify.app/assets/rain-glitch-soft.gif');
       background-size: cover;
-      background-repeat: no-repeat;
       background-attachment: fixed;
+      background-repeat: no-repeat;
+      color: #444;
       padding: 2rem;
       margin: 0;
-      color: #333;
     }
 
     h1 {
       text-align: center;
       font-size: 1.7rem;
       color: #d94f85;
-      margin-bottom: 2rem;
-      text-shadow: 1px 1px white;
+      margin-bottom: 1.5rem;
     }
 
     .confession {
       backdrop-filter: blur(6px);
-      background: rgba(255, 255, 255, 0.65);
+      background: rgba(255, 255, 255, 0.7);
       border: 1px solid #ffcfe0;
       border-radius: 12px;
       padding: 1rem;
@@ -77,23 +46,39 @@
       font-size: 1.05rem;
       margin-top: 0.5rem;
       color: #333;
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-
-    @media (max-width: 600px) {
-      body {
-        padding: 1rem;
-      }
-
-      h1 {
-        font-size: 1.3rem;
-      }
     }
   </style>
 </head>
 <body>
   <h1>Undelivered — by MAHOMEY BULWAYAN LD</h1>
   <main id="wall"></main>
+
+  <script type="module">
+    import { db } from "./firebase.js";
+    import {
+      collection,
+      getDocs,
+      query,
+      where
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const wall = document.getElementById("wall");
+
+      const q = query(collection(db, "confessions"), where("approved", "==", true));
+      const snapshot = await getDocs(q);
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const div = document.createElement("div");
+        div.className = "confession";
+        div.innerHTML = `
+          <p class="to-label">To: ${data.to || "someone"}</p>
+          <p class="message">“${data.message}”</p>
+        `;
+        wall.appendChild(div);
+      });
+    });
+  </script>
 </body>
 </html>
