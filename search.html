@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Search Confessions</title>
+  <title>Search — Undelivered</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script type="module">
     import { db } from "./firebase.js";
-    import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const form = document.getElementById("searchForm");
     const result = document.getElementById("results");
@@ -14,24 +15,85 @@
       e.preventDefault();
       result.innerHTML = "";
 
-      const name = form.name.value.toLowerCase();
+      const keyword = form.name.value.toLowerCase();
       const snapshot = await getDocs(collection(db, "confessions"));
 
       snapshot.forEach(doc => {
         const data = doc.data();
-        if (data.approved && (data.to?.toLowerCase().includes(name) || data.message.toLowerCase().includes(name))) {
+        if (data.approved && (
+          (data.to && data.to.toLowerCase().includes(keyword)) ||
+          (data.message && data.message.toLowerCase().includes(keyword))
+        )) {
           const div = document.createElement("div");
-          div.innerHTML = `<p><strong>To:</strong> ${data.to || "anon"}</p><p>${data.message}</p><hr>`;
+          div.className = "confession";
+          div.innerHTML = `<p><strong>To:</strong> ${data.to || "anon"}</p><p>${data.message}</p>`;
           result.appendChild(div);
         }
       });
     });
   </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Schoolbell&display=swap');
+    body {
+      font-family: 'Schoolbell', cursive;
+      background-image: url('https://mahomey-files.netlify.app/assets/rain-glitch-soft.gif');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-color: #fdf3f7;
+      padding: 2rem;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #d94f85;
+      margin-bottom: 1rem;
+    }
+
+    form {
+      max-width: 500px;
+      margin: auto;
+      background: rgba(255,255,255,0.7);
+      padding: 1rem;
+      border-radius: 10px;
+      border: 1px solid #ffcfe0;
+      margin-bottom: 2rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ffcfe0;
+      border-radius: 6px;
+      background: #fff0f6;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      background: #f06ba2;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .confession {
+      background: rgba(255,255,255,0.75);
+      border: 1px solid #fddbe9;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
 <body>
-  <h1>Search the Wall</h1>
+  <h1>🔍 Search for a Confession</h1>
   <form id="searchForm">
-    <input name="name" placeholder="Enter your name" required />
+    <input name="name" placeholder="Type a name or word..." required />
     <button type="submit">Search</button>
   </form>
   <div id="results"></div>
