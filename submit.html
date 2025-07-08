@@ -2,82 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Submit a Confession — Undelivered</title>
-  <link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      background: linear-gradient(to bottom, #fdf6f8, #ffeef2), url('https://i.imgur.com/Up9L5sx.png');
-      background-size: cover;
-      font-family: 'Kalam', cursive;
-      color: #4b2e2e;
-      padding: 2rem;
-    }
-    h1 {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    form {
-      background: rgba(255, 255, 255, 0.4);
-      padding: 1.5rem;
-      border-radius: 1rem;
-      backdrop-filter: blur(5px);
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      max-width: 500px;
-      margin: auto;
-    }
-    label {
-      display: block;
-      margin: 1rem 0 0.3rem;
-      font-size: 1rem;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 0.7rem;
-      border-radius: 8px;
-      border: 1px solid #e3b4c1;
-      font-family: 'Kalam', cursive;
-      font-size: 1rem;
-      background-color: #fffdfd;
-    }
-    button {
-      margin-top: 1.5rem;
-      background-color: #e3b4c1;
-      color: white;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-    button:hover {
-      background-color: #d29aad;
-    }
-  </style>
+  <title>Submit a Confession</title>
+  <script type="module">
+    import { db } from "./firebase.js";
+    import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("confess-form");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const to = form.to.value.trim();
+        const from = form.from.value.trim();
+        const message = form.message.value.trim();
+        const category = form.category.value.trim();
+
+        if (message.length === 0) {
+          alert("Message cannot be empty!");
+          return;
+        }
+
+        await addDoc(collection(db, "confessions"), {
+          to,
+          from,
+          category,
+          message,
+          approved: false,
+          createdAt: new Date()
+        });
+
+        alert("Sent to the wall 🩶 (pending approval)");
+        form.reset();
+      });
+    });
+  </script>
 </head>
 <body>
-  <h1>Submit a Confession</h1>
-  <form>
-    <label for="to">To (optional name):</label>
-    <input type="text" id="to" name="to" placeholder="TO M., dear J, hey nov...">
-
-    <label for="from">From (leave blank for anonymous):</label>
-    <input type="text" id="from" name="from" placeholder="Anonymous">
-
-    <label for="category">Category:</label>
-    <select id="category" name="category">
-      <option value="friend">Friend</option>
-      <option value="cousin">Cousin</option>
-      <option value="boyfriend">Boyfriend</option>
-      <option value="internet friend">Internet Friend</option>
-      <option value="other">Other</option>
-    </select>
-
-    <label for="message">Your Confession:</label>
-    <textarea id="message" name="message" rows="6" placeholder="Write everything you never said out loud..."></textarea>
-
+  <h1>Send Your Confession</h1>
+  <form id="confess-form">
+    <input name="to" placeholder="To (optional)" />
+    <input name="from" placeholder="From (optional)" />
+    <input name="category" placeholder="Category (e.g., friend, ex, cousin)" />
+    <textarea name="message" placeholder="Your message..." required></textarea>
     <button type="submit">Send to the Wall</button>
   </form>
 </body>
