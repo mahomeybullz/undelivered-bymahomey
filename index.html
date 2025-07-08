@@ -39,24 +39,27 @@
 
     body {
       font-family: 'Schoolbell', cursive;
-      background: linear-gradient(to bottom, #fdf3f7, #fbe3ee);
-      background-image: url('https://i.ibb.co/XzVkMbY/rainy-glitch.gif');
+      background-color: #fdf3f7;
+      background-image: url('https://mahomey-files.netlify.app/assets/rain-glitch-soft.gif');
       background-size: cover;
-      color: #444;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
       padding: 2rem;
       margin: 0;
+      color: #333;
     }
 
     h1 {
       text-align: center;
       font-size: 1.7rem;
       color: #d94f85;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px white;
     }
 
     .confession {
-      backdrop-filter: blur(5px);
-      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(6px);
+      background: rgba(255, 255, 255, 0.65);
       border: 1px solid #ffcfe0;
       border-radius: 12px;
       padding: 1rem;
@@ -74,6 +77,18 @@
       font-size: 1.05rem;
       margin-top: 0.5rem;
       color: #333;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 1.3rem;
+      }
     }
   </style>
 </head>
