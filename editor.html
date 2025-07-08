@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Confession Editor</title>
+  <title>Editor — Undelivered</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script type="module">
     import { db } from "./firebase.js";
     import { collection, getDocs, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -11,27 +12,28 @@
 
     async function loadPending() {
       const snapshot = await getDocs(collection(db, "confessions"));
-      snapshot.forEach(async conf => {
+      snapshot.forEach(conf => {
         const data = conf.data();
         const div = document.createElement("div");
+        div.className = "confession";
         div.innerHTML = `
-          <p><strong>To:</strong> ${data.to || "anon"} <br>
-          <strong>From:</strong> ${data.from || "anon"} <br>
+          <p><strong>To:</strong> ${data.to || "anon"}<br>
+          <strong>From:</strong> ${data.from || "anon"}<br>
+          <strong>Category:</strong> ${data.category || "none"}<br>
           <strong>Message:</strong> ${data.message}</p>
-          <button data-id="${conf.id}" class="approve">Approve</button>
-          <button data-id="${conf.id}" class="delete">Delete</button>
-          <hr />
+          <button data-id="${conf.id}" class="approve">✅ Approve</button>
+          <button data-id="${conf.id}" class="delete">🗑 Delete</button>
         `;
         list.appendChild(div);
       });
 
       document.addEventListener("click", async (e) => {
         const id = e.target.dataset.id;
-        if (e.target.className === "approve") {
+        if (e.target.classList.contains("approve")) {
           await updateDoc(doc(db, "confessions", id), { approved: true });
           alert("Approved!");
           location.reload();
-        } else if (e.target.className === "delete") {
+        } else if (e.target.classList.contains("delete")) {
           await deleteDoc(doc(db, "confessions", id));
           alert("Deleted!");
           location.reload();
@@ -41,9 +43,52 @@
 
     loadPending();
   </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Schoolbell&display=swap');
+    body {
+      font-family: 'Schoolbell', cursive;
+      background: #fff0f6;
+      padding: 2rem;
+      background-image: url('https://mahomey-files.netlify.app/assets/rain-glitch-soft.gif');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    h1 {
+      text-align: center;
+      color: #d94f85;
+    }
+
+    .confession {
+      background: rgba(255,255,255,0.8);
+      border: 1px solid #ffcfe0;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      margin-right: 10px;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .approve {
+      background: #b0e57c;
+    }
+
+    .delete {
+      background: #f79c9c;
+    }
+  </style>
 </head>
 <body>
-  <h1>Confession Editor</h1>
+  <h1>🛠 Confession Editor</h1>
   <div id="pending"></div>
 </body>
 </html>
