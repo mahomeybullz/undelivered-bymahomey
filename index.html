@@ -2,18 +2,97 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Undelivered — by MAHOMEY BULWAYAN LD</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(to bottom, #fdf6f8, #ffeef2), url('https://i.imgur.com/Up9L5sx.png');
+      background-size: cover;
+      font-family: 'Kalam', cursive;
+      color: #4b2e2e;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 2.2rem;
+      margin: 0;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: #b78695;
+    }
+    .tagline {
+      font-size: 0.95rem;
+      color: #a88191;
+      margin-top: 0.3rem;
+    }
+    .confession-wall {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .confession {
+      background: rgba(255, 255, 255, 0.3);
+      border: 1px solid #e7bccd;
+      border-radius: 10px;
+      padding: 1rem;
+      backdrop-filter: blur(4px);
+      color: transparent;
+      text-shadow: 0 0 8px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+    .confession:hover {
+      color: #4b2e2e;
+      text-shadow: none;
+      cursor: pointer;
+    }
+    .nav-buttons {
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+    .nav-buttons a {
+      display: inline-block;
+      margin: 0.5rem 1rem;
+      padding: 0.7rem 1.2rem;
+      background-color: #e3b4c1;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: background 0.2s ease;
+    }
+    .nav-buttons a:hover {
+      background-color: #d29aad;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #8e6e7c;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <header class="header">
+    <div class="header">
       <h1>Undelivered</h1>
       <p class="subtitle">by MAHOMEY BULWAYAN LD</p>
       <p class="tagline">where the unsent things go</p>
-    </header>
+    </div>
+
+    <div class="nav-buttons">
+      <a href="submit.html">➕ Submit</a>
+      <a href="search.html">🔍 Search</a>
+    </div>
 
     <main class="confession-wall">
       <div class="confession blurred">TO M. — “ikaw na bahala if magpapaalam ka pa or hindi na...”</div>
@@ -23,9 +102,9 @@
       <div class="confession blurred">TO T. — “hindi ako galit, pero hindi rin ako buo.”</div>
     </main>
 
-    <footer class="footer">
+    <div class="footer">
       🌧 Glitchy Rain Vibes Activated — <br> Undelivered — by MAHOMEY BULWAYAN LD
-    </footer>
+    </div>
   </div>
 </body>
 </html>
